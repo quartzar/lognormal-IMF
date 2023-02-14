@@ -5,8 +5,6 @@
 
 #include "gnuplot-iostream.h"
 
-double lognormal_random_variable(double mu, double sigma);
-
 int main() {
     int N = 1000;
     double mu = 0.1;        // Mean in base_10 log space       [Chabrier 2002]
@@ -47,23 +45,4 @@ int main() {
     gp << "e\n";
     
     return 0;
-}
-
-
-
-double lognormal_random_variable(double mu, double sigma)
-{
-    double ln_mu = std::log10(mu);
-    double ln_sigma = std::log(10.0) * sigma;
-    
-    std::random_device rd;
-    // std::mt19937 genr(rd());
-    
-    std::mt19937_64 rng(rd()); // Mersenne Twister 19937 generator with 64-bit output
-    std::lognormal_distribution<double> dist(ln_mu, ln_sigma);
-
-    double x = dist(rng);
-    double y = std::log10(std::exp(x));
-
-    return y;
 }
